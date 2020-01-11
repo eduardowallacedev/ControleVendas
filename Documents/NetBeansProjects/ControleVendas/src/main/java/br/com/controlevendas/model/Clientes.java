@@ -7,7 +7,7 @@ package br.com.controlevendas.model;
 
 /**
  *
- * @author Eduardo
+ * @author eduardowallacedev <eduardo.wallace@outlook.com.br>
  */
 public class Clientes {
     
