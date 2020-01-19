@@ -29,7 +29,7 @@ public class ClientesDAO {
     
     //Method cadastra Cliente
     
-    public void cadastrar(Clientes obj){
+    public void cadastrarCliente(Clientes obj){
         try {
             // Prepara o comando sql
             String sql = "insert into tb_clientes (nome,rg,cpf,email,telefone,celular,cep,endereco,numero,complemento,bairro,cidade,estado)"
