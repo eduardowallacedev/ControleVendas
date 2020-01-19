@@ -9,6 +9,8 @@ import br.com.controlevendas.dao.ClientesDAO;
 import br.com.controlevendas.model.Clientes;
 import br.com.controlevendas.model.Utilitarios;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import static java.awt.event.KeyEvent.VK_ENTER;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,16 +19,15 @@ import javax.swing.table.DefaultTableModel;
  * @author Eduardo Wallace
  */
 public class FrmCliente extends javax.swing.JFrame {
-    
+
     //Metodo listar tabela
-    
-    public void listar(){
-        
+    public void listar() {
+
         ClientesDAO dao = new ClientesDAO();
         List<Clientes> lista = dao.listarClientes();
         DefaultTableModel dados = (DefaultTableModel) tabelaClientes.getModel();
         dados.setNumRows(0);
-        
+
         lista.forEach((c) -> {
             dados.addRow(new Object[]{
                 c.getId(),
@@ -43,10 +44,10 @@ public class FrmCliente extends javax.swing.JFrame {
                 c.getBairro(),
                 c.getCidade(),
                 c.getEstado()
-                             
+
             });
         });
-            
+
     }
 
     /**
@@ -175,6 +176,16 @@ public class FrmCliente extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         txtCep.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtCep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCepActionPerformed(evt);
+            }
+        });
+        txtCep.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCepKeyPressed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Endereço:");
@@ -230,7 +241,7 @@ public class FrmCliente extends javax.swing.JFrame {
         jLabel13.setText("UF:");
 
         cbEstado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AM", "SP", "RJ" }));
+        cbEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" }));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel14.setText("RG:");
@@ -590,7 +601,7 @@ public class FrmCliente extends javax.swing.JFrame {
         List<Clientes> lista = dao.buscaClientePorNome(nome);
         DefaultTableModel dados = (DefaultTableModel) tabelaClientes.getModel();
         dados.setNumRows(0);
-        
+
         lista.forEach((c) -> {
             dados.addRow(new Object[]{
                 c.getId(),
@@ -607,10 +618,10 @@ public class FrmCliente extends javax.swing.JFrame {
                 c.getBairro(),
                 c.getCidade(),
                 c.getEstado()
-                             
+
             });
         });
-        
+
     }//GEN-LAST:event_btnPesquisarActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
@@ -639,14 +650,14 @@ public class FrmCliente extends javax.swing.JFrame {
         ClientesDAO dao = new ClientesDAO();
 
         dao.cadastrarCliente(obj);
-        
+
         new Utilitarios().limpaTela(painel_dados);
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-       // Botão Editar
-       
+        // Botão Editar
+
         Clientes obj = new Clientes();
         obj.setNome(txtNome.getText());
         obj.setRg(txtRg.getText());
@@ -661,59 +672,59 @@ public class FrmCliente extends javax.swing.JFrame {
         obj.setBairro(txtBairro.getText());
         obj.setCidade(txtCidade.getText());
         obj.setEstado(cbEstado.getSelectedItem().toString());
-        
+
         obj.setId(Integer.parseInt(intCodigo.getText()));
-        
+
         ClientesDAO dao = new ClientesDAO();
 
         dao.alterarCliente(obj);
-        
+
         new Utilitarios().limpaTela(painel_dados);
-        
+
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // Botão Excluir
-       
-        Clientes obj = new Clientes();  
+
+        Clientes obj = new Clientes();
         obj.setId(Integer.parseInt(intCodigo.getText()));
-       
+
         ClientesDAO dao = new ClientesDAO();
 
         dao.excluirCliente(obj);
-        
+
         new Utilitarios().limpaTela(painel_dados);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // Carrega a lista de clientes
         listar();
-        
+
     }//GEN-LAST:event_formWindowActivated
 
     private void tabelaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaClientesMouseClicked
         // Pega os dados da tabela e envia para o painel de edição após
         // o clique do mouse.
-        
+
         //Direciona para o painel de edição
         jTabbedPane1.setSelectedIndex(0);
-        
-        intCodigo.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),0).toString());
-        txtNome.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),1).toString());
-        txtRg.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),2).toString());
-        txtCpf.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),3).toString());
-        txtEmail.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),4).toString());
-        txtTelefone.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),5).toString());
-        txtCelular.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),6).toString());
-        txtCep.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),7).toString());
-        txtEndereco.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),8).toString());
-        txtNumero.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),9).toString());
-        txtComplemento.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),10).toString());
-        txtBairro.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),11).toString());
-        txtCidade.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),12).toString());
-        cbEstado.setSelectedItem((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),13).toString());
-        
-        
+
+        intCodigo.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0).toString());
+        txtNome.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 1).toString());
+        txtRg.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 2).toString());
+        txtCpf.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 3).toString());
+        txtEmail.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 4).toString());
+        txtTelefone.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 5).toString());
+        txtCelular.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 6).toString());
+        txtCep.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 7).toString());
+        txtEndereco.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 8).toString());
+        txtNumero.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 9).toString());
+        txtComplemento.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 10).toString());
+        txtBairro.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 11).toString());
+        txtCidade.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 12).toString());
+        cbEstado.setSelectedItem((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 13).toString());
+
+
     }//GEN-LAST:event_tabelaClientesMouseClicked
 
     private void txtPesquisaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyPressed
@@ -723,7 +734,7 @@ public class FrmCliente extends javax.swing.JFrame {
         List<Clientes> lista = dao.buscaClientePorNome(nome);
         DefaultTableModel dados = (DefaultTableModel) tabelaClientes.getModel();
         dados.setNumRows(0);
-        
+
         lista.forEach((c) -> {
             dados.addRow(new Object[]{
                 c.getId(),
@@ -740,10 +751,33 @@ public class FrmCliente extends javax.swing.JFrame {
                 c.getBairro(),
                 c.getCidade(),
                 c.getEstado()
-                             
+
             });
         });
     }//GEN-LAST:event_txtPesquisaKeyPressed
+
+    private void txtCepKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCepKeyPressed
+        // Chamada ws do cep
+
+        //Programacao do keypress
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            Clientes obj = new Clientes();
+            ClientesDAO dao = new ClientesDAO();
+            obj = dao.buscaCep(txtCep.getText());
+
+            txtEndereco.setText(obj.getEndereco());
+            txtBairro.setText(obj.getBairro());
+            txtCidade.setText(obj.getCidade());
+            cbEstado.setSelectedItem(obj.getEstado());
+            //System.out.println(obj.getEstado());
+
+        }
+
+    }//GEN-LAST:event_txtCepKeyPressed
+
+    private void txtCepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCepActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCepActionPerformed
 
     /**
      * @param args the command line arguments
