@@ -26,7 +26,7 @@ public class FrmCliente extends javax.swing.JFrame {
         DefaultTableModel dados = (DefaultTableModel) tabelaClientes.getModel();
         dados.setNumRows(0);
         
-        for(Clientes c: lista){
+        lista.forEach((c) -> {
             dados.addRow(new Object[]{
                 c.getId(),
                 c.getNome(),
@@ -44,7 +44,7 @@ public class FrmCliente extends javax.swing.JFrame {
                 c.getEstado()
                              
             });
-        }
+        });
             
     }
 
@@ -82,7 +82,7 @@ public class FrmCliente extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtEndereco = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        intNumero = new javax.swing.JTextField();
+        txtNumero = new javax.swing.JTextField();
         txtCidade = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -187,10 +187,10 @@ public class FrmCliente extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("N°:");
 
-        intNumero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        intNumero.addActionListener(new java.awt.event.ActionListener() {
+        txtNumero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtNumero.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                intNumeroActionPerformed(evt);
+                txtNumeroActionPerformed(evt);
             }
         });
 
@@ -319,7 +319,7 @@ public class FrmCliente extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(intNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 244, Short.MAX_VALUE))
                             .addComponent(cbEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
@@ -346,7 +346,7 @@ public class FrmCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtEndereco, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(intNumero, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtNumero, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel9)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -402,6 +402,11 @@ public class FrmCliente extends javax.swing.JFrame {
                 "Codigo", "Nome", "RG", "CPF", "E-Mail", "Telefone", "Celular", "Cep", "Endereco", "Numero", "Complemento", "Bairro", "Cidade", "Estado"
             }
         ));
+        tabelaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaClientesMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaClientes);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -543,9 +548,9 @@ public class FrmCliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEnderecoActionPerformed
 
-    private void intNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_intNumeroActionPerformed
+    private void txtNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_intNumeroActionPerformed
+    }//GEN-LAST:event_txtNumeroActionPerformed
 
     private void txtCidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCidadeActionPerformed
         // TODO add your handling code here:
@@ -593,7 +598,7 @@ public class FrmCliente extends javax.swing.JFrame {
         obj.setCelular(txtCelular.getText());
         obj.setCep(txtCep.getText());
         obj.setEndereco(txtEndereco.getText());
-        obj.setNumero(Integer.parseInt(intNumero.getText()));
+        obj.setNumero(Integer.parseInt(txtNumero.getText()));
         obj.setComplemento(txtComplemento.getText());
         obj.setBairro(txtBairro.getText());
         obj.setCidade(txtCidade.getText());
@@ -618,6 +623,31 @@ public class FrmCliente extends javax.swing.JFrame {
         listar();
         
     }//GEN-LAST:event_formWindowActivated
+
+    private void tabelaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaClientesMouseClicked
+        // Pega os dados da tabela e envia para o painel de edição após
+        // o clique do mouse.
+        
+        //Direciona para o painel de edição
+        jTabbedPane1.setSelectedIndex(0);
+        
+        intCodigo.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),0).toString());
+        txtNome.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),1).toString());
+        txtRg.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),2).toString());
+        txtCpf.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),3).toString());
+        txtEmail.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),4).toString());
+        txtTelefone.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),5).toString());
+        txtCelular.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),6).toString());
+        txtCep.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),7).toString());
+        txtEndereco.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),8).toString());
+        txtNumero.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),9).toString());
+        txtComplemento.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),10).toString());
+        txtBairro.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),11).toString());
+        txtCidade.setText((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),12).toString());
+        cbEstado.setSelectedItem((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(),13).toString());
+        
+        
+    }//GEN-LAST:event_tabelaClientesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -662,7 +692,6 @@ public class FrmCliente extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvar;
     private javax.swing.JComboBox<String> cbEstado;
     private javax.swing.JTextField intCodigo;
-    private javax.swing.JTextField intNumero;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -695,6 +724,7 @@ public class FrmCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtNumero;
     private javax.swing.JTextField txtRg;
     private javax.swing.JFormattedTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
