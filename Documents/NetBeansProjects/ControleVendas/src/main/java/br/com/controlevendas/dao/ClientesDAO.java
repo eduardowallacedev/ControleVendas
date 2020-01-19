@@ -63,12 +63,32 @@ public class ClientesDAO {
     }
     
     //Method atualiza o Cliente
-    public void alterar(){
+    public void alterarCliente(){
         
     }
     
     //Method exclui um Cliente
-    public void excluir(){
+    public void excluirCliente(Clientes obj){
+                  
+        try {
+            // Prepara o comando sql
+            String sql = "delete from tb_clientes where id=?";
+            
+            try ( // Conectar com o DB e organizar o comando sql
+                    PreparedStatement stmt = con.prepareStatement(sql)) {
+                stmt.setInt(1,obj.getId());
+                
+                // Executar o comando sql
+                stmt.execute();
+                stmt.close();
+            }
+            
+            JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!");
+                              
+        } catch (SQLException error) {
+          JOptionPane.showMessageDialog(null, "Erro: "+ error);                        
+        }
+    
         
     }
     
