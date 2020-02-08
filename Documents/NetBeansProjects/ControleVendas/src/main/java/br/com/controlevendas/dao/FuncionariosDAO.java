@@ -8,6 +8,7 @@ package br.com.controlevendas.dao;
 import br.com.controlevendas.jdbc.ConnectionFactory;
 import br.com.controlevendas.model.Clientes;
 import br.com.controlevendas.model.Funcionarios;
+import br.com.controlevendas.model.WebServiceCep;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -198,5 +199,28 @@ public class FuncionariosDAO {
             JOptionPane.showMessageDialog(null, "Erro:"+ error);
             return null;
         }
+    }
+    
+    // Busca CEP
+    
+     public Funcionarios buscaCep(String cep) {
+       
+        WebServiceCep webServiceCep = WebServiceCep.searchCep(cep);
+       
+
+        Funcionarios obj = new Funcionarios();
+
+        if (webServiceCep.wasSuccessful()) {
+            obj.setEndereco(webServiceCep.getLogradouroFull());
+            obj.setCidade(webServiceCep.getCidade());
+            obj.setBairro(webServiceCep.getBairro());
+            obj.setEstado(webServiceCep.getUf());
+            return obj;
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro numero: " + webServiceCep.getResulCode());
+            JOptionPane.showMessageDialog(null, "Descrição do erro: " + webServiceCep.getResultText());
+            return null;
+        }
+
     }
 }
