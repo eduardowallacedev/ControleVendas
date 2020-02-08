@@ -82,6 +82,9 @@ public class FuncionariosDAO {
                 obj.setRg(rs.getString("Rg"));
                 obj.setCpf(rs.getString("Cpf"));
                 obj.setEmail(rs.getString("Email"));
+                obj.setSenha(rs.getString("senha"));
+                obj.setCargo(rs.getString("cargo"));
+                obj.setNivelAcesso(rs.getString("nivel_acesso"));
                 obj.setTelefone(rs.getString("Telefone"));
                 obj.setCelular(rs.getString("Celular"));
                 obj.setCep(rs.getString("Cep"));
