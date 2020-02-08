@@ -169,8 +169,34 @@ public class FuncionariosDAO {
                               
         } catch (SQLException error) {
           JOptionPane.showMessageDialog(null, "Erro: "+ error);                        
-        }
+        }           
+    }
     
-        
+    // Método Buscar Funcionario 
+    
+    public List<Funcionarios> buscaFuncionarioPorNome(String nome){
+        try {
+            //Cria a lista
+            List<Funcionarios> lista = new ArrayList<>();
+            //Criar o comando sql, organizar e executar a sql
+            String sql = "select * from tb_funcionarios where nome like ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1,nome);
+           
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                Funcionarios obj = new Funcionarios();
+                obj.setNome(rs.getString("nome"));
+                              
+                lista.add(obj);
+            }
+            
+            return lista;
+            
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, "Erro:"+ error);
+            return null;
+        }
     }
 }
