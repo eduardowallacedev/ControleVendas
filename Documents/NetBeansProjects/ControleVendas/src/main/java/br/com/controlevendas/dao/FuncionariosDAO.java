@@ -9,7 +9,10 @@ import br.com.controlevendas.jdbc.ConnectionFactory;
 import br.com.controlevendas.model.Funcionarios;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -55,11 +58,50 @@ public class FuncionariosDAO {
                 stmt.execute();
             }
             
-            JOptionPane.showMessageDialog(null, "Funcionarios cadastrado com sucesso!");
+            JOptionPane.showMessageDialog(null, "Funcionario cadastrado com sucesso!");
                               
         } catch (SQLException error) {
           JOptionPane.showMessageDialog(null, "Erro: "+ error);                        
         }
     }
+    
+    //Metodo listar todos os funcionarios
+    public List<Funcionarios> listarFuncionarios(){
+        try {
+            //Cria a lista
+            List<Funcionarios> lista = new ArrayList<>();
+            //Criar o comando sql, organizar e executar a sql
+            String sql = "select * from tb_funcionarios";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                Funcionarios obj = new Funcionarios();
+                obj.setId(rs.getInt("id"));
+                obj.setNome(rs.getString("Nome"));
+                obj.setRg(rs.getString("Rg"));
+                obj.setCpf(rs.getString("Cpf"));
+                obj.setEmail(rs.getString("Email"));
+                obj.setTelefone(rs.getString("Telefone"));
+                obj.setCelular(rs.getString("Celular"));
+                obj.setCep(rs.getString("Cep"));
+                obj.setEndereco(rs.getString("Endereco"));
+                obj.setNumero(rs.getInt("Numero"));
+                obj.setCidade(rs.getString("Cidade"));
+                obj.setBairro(rs.getString("Bairro"));
+                obj.setComplemento(rs.getString("Complemento"));
+                obj.setEstado(rs.getString("Estado"));
+                
+                lista.add(obj);
+            }
+            
+            return lista;
+            
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(null, "Erro:"+ error);
+            return null;
+        }
+    }
+    
     
 }
