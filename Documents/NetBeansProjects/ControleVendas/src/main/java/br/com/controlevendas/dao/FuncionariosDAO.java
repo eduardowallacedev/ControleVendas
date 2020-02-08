@@ -30,7 +30,7 @@ public class FuncionariosDAO {
     }
     
     //Metodo cadastrar Funcionario
-    public void cadastrarFuncionarios(Funcionarios obj){
+    public void cadastrarFuncionario(Funcionarios obj){
         try {
             // Prepara o comando sql
             String sql = "insert into tb_funcionarios (nome,rg,cpf,email,senha,cargo,nivel_acesso,telefone,celular,cep,endereco,numero,complemento,bairro,cidade,estado)"
@@ -108,7 +108,7 @@ public class FuncionariosDAO {
     }
     
      //Method atualiza o Funcionarios
-    public void alterarFuncionarios(Funcionarios obj){
+    public void alterarFuncionario(Funcionarios obj){
         
          try {
             //Cria a lista
@@ -149,12 +149,12 @@ public class FuncionariosDAO {
         
     }
     
-    //Method exclui um Cliente
-    public void excluirCliente(Clientes obj){
+    //Method exclui um Funcionarios
+    public void excluirFuncionario(Funcionarios obj){
                   
         try {
             // Prepara o comando sql
-            String sql = "delete from tb_clientes where id=?";
+            String sql = "delete from tb_funcionarios where id=?";
             
             try ( // Conectar com o DB e organizar o comando sql
                     PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -165,7 +165,7 @@ public class FuncionariosDAO {
                 stmt.close();
             }
             
-            JOptionPane.showMessageDialog(null, "Cliente excluído com sucesso!");
+            JOptionPane.showMessageDialog(null, "Funcionarios excluído com sucesso!");
                               
         } catch (SQLException error) {
           JOptionPane.showMessageDialog(null, "Erro: "+ error);                        
